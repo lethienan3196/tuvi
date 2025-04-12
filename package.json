@@ -1,0 +1,18 @@
+{
+  "name": "ziweidoushu-api",
+  "version": "1.0.0",
+  "description": "REST API for Zi Wei Dou Shu chart generation",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["ziwei", "doushu", "astrology", "api"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "fortel-ziweidoushu": "^1.0.0"
+  }
+} 
