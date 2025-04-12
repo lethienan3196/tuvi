@@ -29,9 +29,9 @@ const validateDateParams = (params) => {
 app.post('/api/chart/lunar', (req, res) => {
     try {
         const { year, month, day, bornTime, gender, isLeapMonth = false } = req.body;
-        
+
         validateDateParams({ year, month, day });
-        
+
         if (!bornTime || !gender) {
             throw new Error('Missing required parameters: bornTime or gender');
         }
@@ -71,9 +71,9 @@ app.post('/api/chart/lunar', (req, res) => {
 app.post('/api/chart/solar', (req, res) => {
     try {
         const { year, month, day, bornTime, gender } = req.body;
-        
+
         validateDateParams({ year, month, day });
-        
+
         if (!bornTime || !gender) {
             throw new Error('Missing required parameters: bornTime or gender');
         }
@@ -82,23 +82,16 @@ app.post('/api/chart/solar', (req, res) => {
             year,
             month,
             day,
-            bornTimeGround: DayTimeGround.getByName(bornTime),
+            bornTimeGround: DayTimeGround.getByHour(bornTime.split(':')[0]),
             configType: ConfigType.SKY,
             gender: gender.toUpperCase() === 'F' ? Gender.F : Gender.M,
         };
-
         const destinyBoard = new DestinyBoard(
             DestinyConfigBuilder.withSolar(config)
         );
-
         res.json({
             success: true,
             chart: destinyBoard.toString(),
-            config: destinyBoard.config,
-            element: destinyBoard.element,
-            destinyMaster: destinyBoard.destinyMaster,
-            bodyMaster: destinyBoard.bodyMaster,
-            cells: destinyBoard.cells
         });
     } catch (error) {
         res.status(400).json({
@@ -112,7 +105,7 @@ app.post('/api/chart/solar', (req, res) => {
 app.post('/api/chart/text', (req, res) => {
     try {
         const { text } = req.body;
-        
+
         if (!text) {
             throw new Error('Missing required parameter: text');
         }
